@@ -15,13 +15,12 @@ public class TicTacToeGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Title Label
+
         JLabel title = new JLabel("Tic Tac Toe Game", JLabel.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 22));
         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         add(title, BorderLayout.NORTH);
 
-        // Board Panel
         JPanel boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(3, 3));
         Font buttonFont = new Font("Arial", Font.BOLD, 60);
@@ -31,14 +30,12 @@ public class TicTacToeGUI extends JFrame implements ActionListener {
                 buttons[i][j] = new JButton("");
                 buttons[i][j].setFont(buttonFont);
                 buttons[i][j].setFocusPainted(false);
-                // listener registration moved after construction to avoid leaking 'this'
                 boardPanel.add(buttons[i][j]);
             }
         }
 
         add(boardPanel, BorderLayout.CENTER);
 
-        // Status Label
         statusLabel = new JLabel("Player X's turn", JLabel.CENTER);
         statusLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         statusLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -64,7 +61,6 @@ public class TicTacToeGUI extends JFrame implements ActionListener {
 
         JButton clickedButton = (JButton) e.getSource();
 
-        // Ignore already marked cells
         if (!clickedButton.getText().equals("")) return;
 
         clickedButton.setText(String.valueOf(currentPlayer));
@@ -85,28 +81,24 @@ public class TicTacToeGUI extends JFrame implements ActionListener {
             return;
         }
 
-        // Switch player
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         statusLabel.setText("Player " + currentPlayer + "'s turn");
     }
 
     private boolean checkWin() {
         String s = String.valueOf(currentPlayer);
-        // Check rows
         for (int i = 0; i < 3; i++) {
             if (s.equals(buttons[i][0].getText()) && s.equals(buttons[i][1].getText()) && s.equals(buttons[i][2].getText())) {
                 return true;
             }
         }
 
-        // Check columns
         for (int i = 0; i < 3; i++) {
             if (s.equals(buttons[0][i].getText()) && s.equals(buttons[1][i].getText()) && s.equals(buttons[2][i].getText())) {
                 return true;
             }
         }
 
-        // Check diagonals
         boolean diag1 = s.equals(buttons[0][0].getText()) && s.equals(buttons[1][1].getText()) && s.equals(buttons[2][2].getText());
         boolean diag2 = s.equals(buttons[0][2].getText()) && s.equals(buttons[1][1].getText()) && s.equals(buttons[2][0].getText());
         return diag1 || diag2;
@@ -146,3 +138,4 @@ public class TicTacToeGUI extends JFrame implements ActionListener {
         });
     }
 }
+
